@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.unoonlinegame.GameController">
+   <children>
+      <Text fx:id="lbl_displayName" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stapel" />
+                  <ImageView fx:id="imageView_pile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Karte" />
+                  <ImageView fx:id="imageView_cardOnTable" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+            <Button fx:id="btn_skip" disable="true" mnemonicParsing="false" onAction="#btn_skip_press" text="weiter" />
+         </children>
+      </HBox>
+      <Text fx:id="lbl_info" fill="#f81919" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="lbl_yourCards" strokeType="OUTSIDE" strokeWidth="0.0" text="Deine Karten" />
+      <ScrollPane fitToHeight="true" prefHeight="240.0" prefWidth="200.0" vbarPolicy="NEVER" vmax="0.0">
+         <content>
+            <HBox fx:id="yourCards" alignment="CENTER" prefWidth="200.0" spacing="5.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>
