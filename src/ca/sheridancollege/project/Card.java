@@ -19,6 +19,7 @@ public abstract class Card {
      *
      * @return a String representation of a card. Could be an UNO card, a regular playing card etc.
      */
+    
     enum Color {
         Red, Blue, Green, Yellow, Wild ;
         private static final Color[] colors = Color.values();
@@ -51,8 +52,9 @@ public abstract class Card {
         return this.value;
     }
     
-    @Override
-    public String toSting() {
+    public   String toSting() {
         return this.color + "_" + this.value;
     }
+   
+  
 }
