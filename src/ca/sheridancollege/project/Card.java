@@ -11,7 +11,7 @@ package ca.sheridancollege.project;
  *
  * @author dancye
  */
-public abstract class Card {
+public class Card {
     //default modifier for child classes
 
     /**
