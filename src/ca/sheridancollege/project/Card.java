@@ -11,50 +11,36 @@ package ca.sheridancollege.project;
  *
  * @author dancye
  */
+/**
+ * A class to represent a card in the Uno Game.
+ */
 public class Card {
-    //default modifier for child classes
+    public enum Color {
+        Red, Blue, Green, Yellow, Wild
+    }
 
-    /**
-     * Students should implement this method for their specific children classes
-     *
-     * @return a String representation of a card. Could be an UNO card, a regular playing card etc.
-     */
-    
-    enum Color {
-        Red, Blue, Green, Yellow, Wild ;
-        private static final Color[] colors = Color.values();
-        public static Color getColor(int i){
-            return Color.colors[i];
-        }
+    public enum Value {
+        Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Skip, Reverse, Wild, Wild_Four, DRAW_TWO
     }
-    
-    enum Value {
-        Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, DrawTwo, Skip, Reverse, Wild, Wild_Four;
-        private static final Value[] values = Value.values();
-        public static Value getValue(int i){
-            return Value.values[i];
-        }
-    }
-    
+
     private final Color color;
     private final Value value;
-    
+
     public Card(Color color, Value value) {
-        this.color = color; 
+        this.color = color;
         this.value = value;
     }
-    
+
     public Color getColor() {
-        return this.color;
+        return color;
     }
-    
-    public Value getValue() { 
-        return this.value;
+
+    public Value getValue() {
+        return value;
     }
-    
-    public   String toSting() {
-        return this.color + "_" + this.value;
+
+    @Override
+    public String toString() {
+        return color + "_" + value;
     }
-   
-  
 }
