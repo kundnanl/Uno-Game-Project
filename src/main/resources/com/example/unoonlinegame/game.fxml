@@ -19,21 +19,21 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stapel" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pile" />
                   <ImageView fx:id="imageView_pile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Karte" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Card" />
                   <ImageView fx:id="imageView_cardOnTable" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
-            <Button fx:id="btn_skip" disable="true" mnemonicParsing="false" onAction="#btn_skip_press" text="weiter" />
+            <Button fx:id="btn_skip" disable="true" mnemonicParsing="false" onAction="#btn_skip_press" text="Next" />
          </children>
       </HBox>
       <Text fx:id="lbl_info" fill="#f81919" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text fx:id="lbl_yourCards" strokeType="OUTSIDE" strokeWidth="0.0" text="Deine Karten" />
+      <Text fx:id="lbl_yourCards" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Cards" />
       <ScrollPane fitToHeight="true" prefHeight="240.0" prefWidth="200.0" vbarPolicy="NEVER" vmax="0.0">
          <content>
             <HBox fx:id="yourCards" alignment="CENTER" prefWidth="200.0" spacing="5.0" />

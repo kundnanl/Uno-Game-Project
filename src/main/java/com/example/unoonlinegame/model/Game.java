@@ -2,6 +2,9 @@ package com.example.unoonlinegame.model;
 
 import com.example.unoonlinegame.GameController;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 import java.util.*;
 
 public class Game {
@@ -13,8 +16,10 @@ public class Game {
     private int currentPlayer = 0;
     private boolean active = true;
     private boolean cardActive = true;
+    // private boolean gameDirection;
 
     public Game(GameController controller, List<Player> players) {
+        // this.gameDirection = false;
         this.players = players;
         this.controller = controller;
         table = new Table(controller);
@@ -40,11 +45,42 @@ public class Game {
         controller.displayCards(players.get(currentPlayer).getCards());
     }
 
+    public void previousPlayer() {
+        currentPlayer--;
+        if (currentPlayer == -1) {
+            currentPlayer = players.size() - 1;
+        } else if (currentPlayer == players.size() - 1) {
+            currentPlayer = 0;
+        }
+        System.out.println(currentPlayer);
+        controller.setLbl_displayName(players.get(currentPlayer).getName());
+        controller.displayCards(players.get(currentPlayer).getCards());
+    }
+
+    // public int reverseDir(int currentPlayer) {
+    // gameDirection ^= true;
+    // if (gameDirection == true) {
+    // currentPlayer = (currentPlayer - 2) % players.size();
+    // if (currentPlayer == -1) {
+    // currentPlayer = players.size() - 1;
+    // }
+    // if (currentPlayer == -2) {
+    // currentPlayer = players.size() - 2;
+    // }
+    // } else if (gameDirection == false) {
+    // currentPlayer = (currentPlayer + 2) % players.size();
+    // }
+
+    // return currentPlayer;
+
+    // }
+
     private void giveCardsToPlayer() {
         for (Player player : players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
-                player.giveCard(pile.get(pile.size() - 1));
-                pile.remove(pile.size() - 1);
+                int randomIndex = new Random().nextInt(pile.size());
+                player.giveCard(pile.get(randomIndex));
+                pile.remove(randomIndex);
             }
         }
     }
@@ -52,63 +88,135 @@ public class Game {
     // Create Cards
     private void createCards() {
         List<Card> newCards = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            newCards.add(new Card(i + 1, Color.blue));
-            newCards.add(new Card(i + 1, Color.blue));
+        // Add regular number cards for each color
+        for (Color color : Color.values()) {
+            if (color != Color.black) {
+                for (int i = 1; i <= 9; i++) {
+                    newCards.add(new Card(i, color, CardType.NUMBER));
+                }
+            }
         }
-        for (int i = 0; i < 12; i++) {
-            newCards.add(new Card(i + 1, Color.red));
-            newCards.add(new Card(i + 1, Color.red));
+        // Add Draw Two cards for each color
+        for (Color color : Color.values()) {
+            if (color != Color.black) {
+                newCards.add(new Card(10, color, CardType.DRAW_TWO));
+            }
         }
-        for (int i = 0; i < 12; i++) {
-            newCards.add(new Card(i + 1, Color.green));
-            newCards.add(new Card(i + 1, Color.green));
-        }
-        for (int i = 0; i < 12; i++) {
-            newCards.add(new Card(i + 1, Color.yellow));
-            newCards.add(new Card(i + 1, Color.yellow));
-        }
+        // Add Draw Four cards (black)
         for (int i = 0; i < 4; i++) {
-            newCards.add(new Card(1, Color.black));
-            newCards.add(new Card(2, Color.black));
+            newCards.add(new Card(11, Color.black, CardType.DRAW_FOUR));
         }
+
+        for (Color color : Color.values()) {
+            if (color != Color.black) {
+                // skip to the next player
+                if (color != Color.black) {
+                    newCards.add(new Card(12, color, CardType.SKIP));
+                }
+            }
+        }
+
+        for (Color color : Color.values()) {
+            if (color != Color.black) {
+                // reverse to the next player
+                if (color != Color.black) {
+                    newCards.add(new Card(13, color, CardType.REVERSE));
+                }
+            }
+        }
+
+        newCards.add(new Card(14, Color.black, CardType.WILD_CARD));
+        System.out.println(newCards);
         // Shuffle Cards
         Collections.shuffle(newCards);
-
         pile.addAll(newCards);
     }
 
     public void buttonPressed(int index) {
-        System.out.println(index);
-        // Remove card and add to pile
-        if ((players.get(currentPlayer).getCard(index).getColor() == table.getCardOnTable().getColor() ||
-             players.get(currentPlayer).getCard(index).getNumber() == table.getCardOnTable().getNumber() ||
-             players.get(currentPlayer).getCard(index).getColor() == Color.black ||
-             table.getCardOnTable().getColor() == Color.black) && cardActive) {
+        Card selectedCard = players.get(currentPlayer).getCard(index);
+        Card topCard = table.getCardOnTable();
+
+        if (selectedCard.getNumber() == 10) { // Draw Two card
+            for (int i = 0; i < 2; i++) {
+                int randomIndex = new Random().nextInt(pile.size());
+                players.get((currentPlayer == players.size() - 1) ? 0 : currentPlayer + 1)
+                        .giveCard(pile.get(randomIndex));
+                pile.remove(randomIndex);
+            }
+
+            table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
+
+            setActiveAndDisplayCards(false);
+
+        } else if (selectedCard.getNumber() == 11) { // Draw Four card
+            for (int i = 0; i < 4; i++) {
+                int randomIndex = new Random().nextInt(pile.size());
+                players.get((currentPlayer == players.size() - 1) ? 0 : currentPlayer + 1)
+                        .giveCard(pile.get(randomIndex));
+                pile.remove(randomIndex);
+            }
+            table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
+
+            setActiveAndDisplayCards(false);
+
+        } else if (selectedCard.getNumber() == 12) { // skip Card play
+            pile.add(table.getCardOnTable());
+            table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
+            setActiveAndDisplayCards(true);
+            nextPlayer();
+            nextPlayer();
+            controller.setButtonDisabled(true);
+
+        } else if (selectedCard.getNumber() == 13) { // reverse play
+
+            pile.add(table.getCardOnTable());
+            table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
+            setActiveAndDisplayCards(true);
+            previousPlayer();
+
+        } else if (selectedCard.getColor() == topCard.getColor() || selectedCard.getNumber() == topCard.getNumber()
+                || topCard.getColor() == Color.black) {
+            // Regular card play logic
             pile.add(table.getCardOnTable());
             table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
 
-            active = false;
-            cardActive = false;
-            controller.setButtonDisabled(false);
-            controller.displayCards(players.get(currentPlayer).getCards());
+            setActiveAndDisplayCards(false);
         } else {
-            controller.lbl_info.setText("You cannot do this");
+            controller.lbl_info.setText("You cannot play this card");
         }
+        if (players.get(currentPlayer).getCards().size() == 0) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("CONGRATS");
+            alert.setContentText("You won the game");
+            alert.showAndWait();
+            System.exit(0);
+        }
+    }
+
+    private void setActiveAndDisplayCards(boolean active) {
+        this.active = active;
+        cardActive = false;
+        controller.setButtonDisabled(false);
+        controller.displayCards(players.get(currentPlayer).getCards());
     }
 
     public void buttonPressed() {
         if (active) {
-            players.get(currentPlayer).giveCard(pile.get(pile.size() - 1));
-            pile.remove(pile.size() - 1);
-            controller.displayCards(players.get(currentPlayer).getCards());
-            if (pile.size() == 0) {
+            if (pile.size() > 0) {
+                int randomIndex = new Random().nextInt(pile.size());
+                players.get(currentPlayer).giveCard(pile.get(randomIndex));
+                pile.remove(randomIndex);
+                controller.displayCards(players.get(currentPlayer).getCards());
+            } else {
                 System.out.println("No more cards");
             }
             controller.setButtonDisabled(false);
-            active = false;
         } else {
-            controller.lbl_info.setText("You cannot draw more cards");
+            // controller.lbl_info.setText("You cannot draw more cards");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("You cannot draw more cards");
+            alert.showAndWait();
         }
     }
 

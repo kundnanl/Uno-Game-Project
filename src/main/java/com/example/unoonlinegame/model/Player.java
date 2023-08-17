@@ -2,7 +2,6 @@ package com.example.unoonlinegame.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 public class Player {
     private String name;
@@ -31,10 +30,6 @@ public class Player {
     }
 
     public Card getCard(int index){
-        Card card = cards.get(index);
-        return card;
+        return cards.get(index);
     }
-
-
-
 }

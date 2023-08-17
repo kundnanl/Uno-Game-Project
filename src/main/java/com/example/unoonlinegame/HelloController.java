@@ -1,7 +1,5 @@
 package com.example.unoonlinegame;
 
-import com.example.unoonlinegame.model.Card;
-import com.example.unoonlinegame.model.Color;
 import com.example.unoonlinegame.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,13 +9,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,7 +27,7 @@ public class HelloController implements Initializable {
     @FXML
     private TextField txt_PlayerName;
 
-    private List<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     @FXML
     public void addPlayer(ActionEvent event){
@@ -63,17 +58,20 @@ public class HelloController implements Initializable {
 
     @FXML
     public void changeText(){
-        if(txt_PlayerName.getText() != ""){
+        if(!"".equals(txt_PlayerName.getText())){
             btn_AddPlayer.setDisable(false);
         }else{
             btn_AddPlayer.setDisable(true);
         }
     }
 
+    /**
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 }
-
-//sliderLabel.textProperty().bindBidirectional(number.valueProperty(), NumberFormat.getCompactNumberInstance());

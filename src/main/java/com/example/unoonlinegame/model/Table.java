@@ -4,11 +4,11 @@ import com.example.unoonlinegame.GameController;
 
 import java.util.*;
 
-public class Tisch {
+public class Table {
     private Card cardOnTable;
     private GameController controller;
 
-    public Tisch(GameController controller) {
+    public Table(GameController controller) {
         this.controller = controller;
     }
 

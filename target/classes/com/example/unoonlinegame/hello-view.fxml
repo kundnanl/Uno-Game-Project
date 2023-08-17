@@ -21,7 +21,7 @@
             <Button fx:id="btn_AddPlayer" disable="true" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
          </children>
       </HBox>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*Pflichfelder" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*Mandatory Field" />
       <Button fx:id="btn_StartGame" disable="true" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
    </children>
 </VBox>
