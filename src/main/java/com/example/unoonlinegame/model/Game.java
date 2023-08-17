@@ -57,24 +57,7 @@ public class Game {
         controller.displayCards(players.get(currentPlayer).getCards());
     }
 
-    // public int reverseDir(int currentPlayer) {
-    // gameDirection ^= true;
-    // if (gameDirection == true) {
-    // currentPlayer = (currentPlayer - 2) % players.size();
-    // if (currentPlayer == -1) {
-    // currentPlayer = players.size() - 1;
-    // }
-    // if (currentPlayer == -2) {
-    // currentPlayer = players.size() - 2;
-    // }
-    // } else if (gameDirection == false) {
-    // currentPlayer = (currentPlayer + 2) % players.size();
-    // }
-
-    // return currentPlayer;
-
-    // }
-
+    // deal card
     private void giveCardsToPlayer() {
         for (Player player : players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
@@ -175,7 +158,7 @@ public class Game {
             previousPlayer();
 
         } else if (selectedCard.getNumber() == 14) {
-            // Regular card play logic
+            // Regular card play logic for wild cards
             pile.add(table.getCardOnTable());
             table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
 

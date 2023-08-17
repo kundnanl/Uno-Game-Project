@@ -4,6 +4,7 @@ import com.example.unoonlinegame.GameController;
 
 import java.util.*;
 
+// This is the class using the display username input in the menu page
 public class Table {
     private Card cardOnTable;
     private GameController controller;
@@ -13,13 +14,13 @@ public class Table {
     }
 
     public ArrayList<Card> layCard(ArrayList<Card> cards) {
-        cardOnTable = cards.get(cards.size()-1);
-        cards.remove(cards.size()-1);
+        cardOnTable = cards.get(cards.size() - 1);
+        cards.remove(cards.size() - 1);
         controller.displayCard(cardOnTable);
         return cards;
     }
 
-    public void layCard(Card card){
+    public void layCard(Card card) {
         cardOnTable = card;
         controller.displayCard(cardOnTable);
     }
