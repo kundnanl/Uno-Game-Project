@@ -7,6 +7,18 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.util.*;
 
+/**
+ * The `Game` class represents the Uno game logic and control.
+ * This class manages the game state, player actions, and card interactions.
+ * It handles turns, card plays, and card drawing for players.
+ * The class utilizes the `GameController` for user interface interaction.
+ *
+ * @author Principal Authors:
+ *         - Laksh Kundnani
+ *         - Devendra Bisht
+ *         - Vuong Quoc Nguyen
+ *         - Neha
+ */
 public class Game {
     private GameController controller;
     private List<Player> players = new ArrayList<>();
@@ -25,6 +37,10 @@ public class Game {
         table = new Table(controller);
     }
 
+    /**
+     * Starts the Uno game by creating and distributing cards to players.
+     * This method initializes the game state and prepares for gameplay.
+     */
     public void start() {
         createCards();
         giveCardsToPlayer();
@@ -34,6 +50,10 @@ public class Game {
         controller.setLbl_displayName(players.get(currentPlayer).getName());
     }
 
+    /**
+     * Moves to the next player in the game.
+     * This method advances the turn to the next player's move.
+     */
     public void nextPlayer() {
         if (currentPlayer == players.size() - 1) {
             currentPlayer = 0;
@@ -45,6 +65,10 @@ public class Game {
         controller.displayCards(players.get(currentPlayer).getCards());
     }
 
+    /**
+     * Moves to the previous player in the game.
+     * This method moves the turn to the previous player's move.
+     */
     public void previousPlayer() {
         currentPlayer--;
         if (currentPlayer == -1) {
@@ -57,8 +81,11 @@ public class Game {
         controller.displayCards(players.get(currentPlayer).getCards());
     }
 
-    // deal card
-    private void giveCardsToPlayer() {
+
+    /**
+     * Distributes cards to each player at the start of the game.
+     * This method gives a fixed number of cards to each player from the deck.
+     */    private void giveCardsToPlayer() {
         for (Player player : players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
                 int randomIndex = new Random().nextInt(pile.size());
@@ -68,7 +95,11 @@ public class Game {
         }
     }
 
-    // Create Cards
+    /**
+     * Creates a shuffled deck of Uno cards.
+     * This method generates the initial set of Uno cards, including regular
+     * number cards, Draw Two cards, Draw Four cards, Skip cards, and Reverse cards.
+     */
     private void createCards() {
         List<Card> newCards = new ArrayList<>();
         // Add regular number cards for each color
@@ -115,6 +146,13 @@ public class Game {
         pile.addAll(newCards);
     }
 
+    /**
+     * Handles the button press event when a card is played.
+     * This method manages card play logic, such as drawing cards, skipping players,
+     * reversing the order of play, and regular card plays.
+     *
+     * @param index The index of the selected card in the current player's hand.
+     */
     public void buttonPressed(int index) {
         Card selectedCard = players.get(currentPlayer).getCard(index);
         Card topCard = table.getCardOnTable();
@@ -195,6 +233,10 @@ public class Game {
         controller.displayCards(players.get(currentPlayer).getCards());
     }
 
+    /**
+     * Handles the button press event when a player chooses to draw a card.
+     * This method allows players to draw cards from the game pile.
+     */
     public void buttonPressed() {
         if (active) {
             if (pile.size() > 0) {
@@ -215,10 +257,20 @@ public class Game {
         }
     }
 
+    /**
+     * Sets the game's active state.
+     *
+     * @param active The active state to set for the game.
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     * Sets the card's active state.
+     *
+     * @param cardActive The active state to set for the card.
+     */
     public void setCardActive(boolean cardActive) {
         this.cardActive = cardActive;
     }

@@ -17,6 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * The `HelloController` class is the controller for the initial screen of the Uno game.
+ * It handles adding players and starting the game.
+ *
+ * @author Principal Authors:
+ * - Laksh Kundnani
+ * - Devendra Bisht
+ * - Vuong Quoc Nguyen
+ * - Neha
+ */
 public class HelloController implements Initializable {
     @FXML
     private Button btn_AddPlayer;
@@ -29,6 +39,11 @@ public class HelloController implements Initializable {
 
     private final List<Player> players = new ArrayList<>();
 
+    /**
+     * Event handler for the "Add Player" button. Adds a player to the list of players.
+     *
+     * @param event The action event triggered by clicking the button.
+     */
     @FXML
     public void addPlayer(ActionEvent event){
         lv_Players.getItems().add(txt_PlayerName.getText());
@@ -40,6 +55,12 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     * Event handler for the "Start Game" button. Loads the game screen and passes player data.
+     *
+     * @param event The action event triggered by clicking the button.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void startGame(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
@@ -56,6 +77,9 @@ public class HelloController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Event handler for updating the "Add Player" button state based on input.
+     */
     @FXML
     public void changeText(){
         if(!"".equals(txt_PlayerName.getText())){
@@ -66,9 +90,10 @@ public class HelloController implements Initializable {
     }
 
     /**
+     * Initialize the controller.
      *
-     * @param url
-     * @param resourceBundle
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
