@@ -173,7 +173,11 @@ public class Game {
 
             setActiveAndDisplayCards(false);
         } else {
-            controller.lbl_info.setText("You cannot play this card");
+            // controller.lbl_info.setText("You cannot play this card");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("You cannot play this card");
+            alert.showAndWait();
         }
         if (players.get(currentPlayer).getCards().size() == 0) {
             Alert alert = new Alert(AlertType.INFORMATION);
