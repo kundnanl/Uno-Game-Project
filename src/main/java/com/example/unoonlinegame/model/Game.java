@@ -174,7 +174,15 @@ public class Game {
             setActiveAndDisplayCards(true);
             previousPlayer();
 
-        } else if (selectedCard.getColor() == topCard.getColor() || selectedCard.getNumber() == topCard.getNumber()
+        } else if (selectedCard.getNumber() == 14) {
+            // Regular card play logic
+            pile.add(table.getCardOnTable());
+            table.layCard(players.get(currentPlayer).getAndDeleteCard(index));
+
+            setActiveAndDisplayCards(false);
+        }
+
+        else if (selectedCard.getColor() == topCard.getColor() || selectedCard.getNumber() == topCard.getNumber()
                 || topCard.getColor() == Color.black) {
             // Regular card play logic
             pile.add(table.getCardOnTable());
